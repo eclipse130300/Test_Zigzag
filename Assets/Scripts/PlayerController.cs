@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     private bool isGruonded;
     private GameManager gm;
     [SerializeField] private float speed = 0;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,15 +21,14 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(collisionCounter);
-        if (collisionCounter == 0 && GameManager.gameIsActive)
+        if (collisionCounter == 0)
         {
-            GameManager.gameIsActive = false;
-            gm.LosingSecuence();
+            Fade();
+            gm.GameOver();
             isGruonded = false;
         }
 
-        if(isGruonded && Input.GetMouseButtonDown(0))
+        if (isGruonded && Input.GetMouseButtonDown(0))
         {
             if (goesStraight)
             {
@@ -42,8 +41,8 @@ public class PlayerController : MonoBehaviour
                 goesStraight = true;
             }
         }
-       if (GameManager.gameIsActive || gm.ballIsDying) transform.Translate(Vector2.up * speed * Time.deltaTime);
-       
+        if (gm.gameIsActive) transform.Translate(Vector2.up * speed * Time.deltaTime);
+
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -58,4 +57,12 @@ public class PlayerController : MonoBehaviour
             isGruonded = true;
         }
     }
+    void Fade()
+    {
+        if (gameObject.transform.localScale.x >= 0)
+        {
+            gameObject.transform.localScale += new Vector3(-0.001f, -0.001f, -0.01f);
+        }
+    }
 }
+

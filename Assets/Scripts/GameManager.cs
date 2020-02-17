@@ -6,9 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static bool gameIsActive;
-    public bool gameIsOver;
-    public bool ballIsDying;
+    public bool gameIsActive;
+    private bool gameIsOver;
 
     public Text startText;
     public Text restartText;
@@ -23,7 +22,7 @@ public class GameManager : MonoBehaviour
     {
         if (SceneLoadCounter.SceneLoadCount < 1)
         {
-            if (!gameIsActive && Input.anyKeyDown)
+            if (Input.anyKeyDown && !gameIsActive)
             {
                 StartGame();
             }
@@ -34,7 +33,6 @@ public class GameManager : MonoBehaviour
         }
         if (Input.anyKeyDown && gameIsOver)
         {
-            gameIsOver = false;
             RestartGame();
         }
     }
@@ -45,20 +43,20 @@ public class GameManager : MonoBehaviour
     }
     public void GameOver()
     {
-        ballIsDying = false;
+        gameIsActive = false;
         gameIsOver = true;
         //show Game is Over Tap here to restart
-        restartText.gameObject.SetActive(true);
+        Invoke("ShowRestartText", 1f);
     }
-    public void LosingSecuence()
-    {
-        ballIsDying = true;
-        Invoke("GameOver", 1f); //string ref
-        //playerisFading
-    }
+
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
-    
+
+    void ShowRestartText()
+    {
+        restartText.gameObject.SetActive(true);
+    }
+
 }
