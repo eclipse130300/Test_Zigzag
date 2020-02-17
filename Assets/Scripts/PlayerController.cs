@@ -21,8 +21,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (collisionCounter == 0 && gm.gameIsActive)
+        Debug.Log(collisionCounter);
+        if (collisionCounter == 0 && GameManager.gameIsActive)
         {
+            GameManager.gameIsActive = false;
             gm.LosingSecuence();
             isGruonded = false;
         }
@@ -40,7 +42,7 @@ public class PlayerController : MonoBehaviour
                 goesStraight = true;
             }
         }
-       if (gm.gameIsActive && !gm.gameIsOver) transform.Translate(Vector2.up * speed * Time.deltaTime);
+       if (GameManager.gameIsActive || gm.ballIsDying) transform.Translate(Vector2.up * speed * Time.deltaTime);
        
     }
     private void OnTriggerExit2D(Collider2D collision)

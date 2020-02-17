@@ -6,31 +6,37 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public bool gameIsActive;
+    public static bool gameIsActive;
     public bool gameIsOver;
+    public bool ballIsDying;
 
     public Text startText;
     public Text restartText;
     // Start is called before the first frame update
     void Start()
     {
-        gameIsActive = false;
-        gameIsOver = false;
         startText.gameObject.SetActive(true);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!gameIsActive && Input.anyKeyDown && !gameIsOver)
+        if (SceneLoadCounter.SceneLoadCount < 1)
         {
-            StartGame();
+            if (!gameIsActive && Input.anyKeyDown)
+            {
+                StartGame();
+            }
+        }
+        else
+        {
+                StartGame();
         }
         if (Input.anyKeyDown && gameIsOver)
         {
+            gameIsOver = false;
             RestartGame();
         }
-        
     }
     void StartGame()
     {
@@ -39,15 +45,15 @@ public class GameManager : MonoBehaviour
     }
     public void GameOver()
     {
+        ballIsDying = false;
         gameIsOver = true;
         //show Game is Over Tap here to restart
         restartText.gameObject.SetActive(true);
     }
     public void LosingSecuence()
     {
-        gameIsActive = false;
+        ballIsDying = true;
         Invoke("GameOver", 1f); //string ref
-        Debug.Log("LosingSecuence Called");
         //playerisFading
     }
     public void RestartGame()
