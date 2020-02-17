@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
         {
             StartGame();
         }
-        if (!gameIsActive && Input.anyKeyDown && gameIsOver)
+        if (Input.anyKeyDown && gameIsOver)
         {
             RestartGame();
         }
@@ -39,13 +39,13 @@ public class GameManager : MonoBehaviour
     }
     public void GameOver()
     {
-        gameIsActive = false;
         gameIsOver = true;
         //show Game is Over Tap here to restart
         restartText.gameObject.SetActive(true);
     }
     public void LosingSecuence()
     {
+        gameIsActive = false;
         Invoke("GameOver", 1f); //string ref
         Debug.Log("LosingSecuence Called");
         //playerisFading
@@ -53,7 +53,6 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        StartGame();
     }
     
 }
