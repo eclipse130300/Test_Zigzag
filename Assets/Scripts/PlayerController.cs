@@ -21,16 +21,16 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Time.timeSinceLevelLoad >= 0.1f) // calls right after restart???!!??..though
+        if (Time.timeSinceLevelLoad >= 0.1f) // without it, calls right after restart??!!??..
         {
-            if (collisionCounter == 0 && !gm.ballisFalling && gm.gameIsActive && !gm.isReadyToRestart)
+            if (collisionCounter == 0 && !gm.ballisFalling && gm.gameIsActive && !gm.isReadyToRestart) //calls GO only once
             {
                 gm.GameOver();
                 isGruonded = false;
             }
         }
 
-        if (gm.ballisFalling)  Fade();
+        if (gm.ballisFalling) Falling();
 
         if (isGruonded && Input.GetMouseButtonDown(0))
         {
@@ -61,9 +61,9 @@ public class PlayerController : MonoBehaviour
             isGruonded = true;
         }
     }
-    void Fade()
+    void Falling()
     {
-            if (gameObject.transform.localScale.x >= 0)
+            if (gameObject.transform.localScale.x >= 0) // gradually decrease the size of the ball, till miniscule amount
             {
                 gameObject.transform.localScale += new Vector3(-0.001f, -0.001f, -0.01f);
             }
