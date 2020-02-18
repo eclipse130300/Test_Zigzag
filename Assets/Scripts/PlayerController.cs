@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     private float rotationAngle = 90f;
     private int collisionCounter = 0;
     private bool isGruonded;
+    public Collider2D[] colliders;
     private GameManager gm;
     [SerializeField] private float speed = 0;
 
@@ -26,7 +27,6 @@ public class PlayerController : MonoBehaviour
             if (collisionCounter == 0 && !gm.ballisFalling && gm.gameIsActive && !gm.isReadyToRestart) //calls GO only once
             {
                 gm.GameOver();
-                isGruonded = false;
             }
         }
 
@@ -46,7 +46,13 @@ public class PlayerController : MonoBehaviour
             }
         }
         if (gm.gameIsActive) transform.Translate(Vector2.up * speed * Time.deltaTime);
-
+        // check if the center of the player is inside of other collider
+            colliders = Physics2D.OverlapCircleAll(transform.position, 0.0f);
+            if (colliders.Length == 1) //always detects player - so 1;
+            {
+                Debug.Log("I'm outside the weather zone");
+                isGruonded = false;
+            }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {

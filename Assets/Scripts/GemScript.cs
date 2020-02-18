@@ -5,9 +5,11 @@ using UnityEngine;
 public class GemScript : MonoBehaviour
 {
     private GameObject player;
+    private GameManager gm;
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
     }
     private void Update()
     {
@@ -22,6 +24,7 @@ public class GemScript : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        gm.AddScore();
         Destroy(gameObject);
     }
 

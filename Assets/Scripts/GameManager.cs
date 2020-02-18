@@ -9,15 +9,18 @@ public class GameManager : MonoBehaviour
     public bool gameIsActive;
     public bool ballisFalling;
     public bool isReadyToRestart;
+    public int score;
 
     public Text startText;
     public Text restartText;
+    public Text scoreText;
     // Start is called before the first frame update
     void Start()
     {
-        startText.gameObject.SetActive(true);
+         startText.gameObject.SetActive(true);
+
         if (SceneLoadCounter.SceneLoadCount >= 1)
-        { 
+        {
             StartGame();
         }
             
@@ -37,6 +40,8 @@ public class GameManager : MonoBehaviour
         {
             RestartGame();
         }
+
+        scoreText.text = "Score: " + score;
     }
     void StartGame()
     {
@@ -61,5 +66,9 @@ public class GameManager : MonoBehaviour
         gameIsActive = false; //!!!
         ballisFalling = false;
         isReadyToRestart = true;
+    }
+    public void AddScore()
+    {
+        score++;
     }
 }

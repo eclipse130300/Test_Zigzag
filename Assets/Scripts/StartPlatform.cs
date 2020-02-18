@@ -14,7 +14,6 @@ public class StartPlatform : MonoBehaviour
     {
         for (float ft = 1f; ft >= 0; ft -= 0.01f)
         {
-            Debug.Log("Works!");
             Color c = GetComponent<Tilemap>().color;
             c.a = ft;
             GetComponent<Tilemap>().color = c;
