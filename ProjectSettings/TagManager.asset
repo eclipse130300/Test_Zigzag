@@ -7,6 +7,7 @@ TagManager:
   - GroundTile
   - TilemapCollider
   - GameManager
+  - StartPlatform
   layers:
   - Default
   - TransparentFX

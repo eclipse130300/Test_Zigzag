@@ -50,12 +50,15 @@ public class PlayerController : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("GroundTile")) collisionCounter--;
+        if (collision.gameObject.CompareTag("GroundTile")
+        || collision.gameObject.CompareTag("StartPlatform")) collisionCounter--;
 
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("GroundTile"))
+        if (collision.gameObject.CompareTag("GroundTile") ||
+            collision.gameObject.CompareTag("StartPlatform")
+            )
         {
             collisionCounter++;
             isGruonded = true;
