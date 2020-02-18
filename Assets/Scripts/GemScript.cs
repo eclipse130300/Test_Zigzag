@@ -6,6 +6,7 @@ public class GemScript : MonoBehaviour
 {
     private GameObject player;
     private GameManager gm;
+    public AudioClip gemPickUp;
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -25,6 +26,7 @@ public class GemScript : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         gm.AddScore();
+        AudioSource.PlayClipAtPoint(gemPickUp, Camera.main.transform.position + new Vector3(0, 0, 1) , 1f);
         Destroy(gameObject);
     }
 

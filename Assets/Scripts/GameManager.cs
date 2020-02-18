@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     public Text startText;
     public Text restartText;
     public Text scoreText;
+
+    public AudioClip fallingSound;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,14 +31,14 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         if (SceneLoadCounter.SceneLoadCount == 0)
-        {
-            if (Input.anyKeyDown && !gameIsActive && !ballisFalling && !isReadyToRestart) //To listen to player's input for the very first secouns
+        { //Input.anyKeyDown PC
+            if (Input.touchCount >= 1 && !gameIsActive && !ballisFalling && !isReadyToRestart) //To listen to player's input for the very first secouns
             {
                 StartGame();
             }
         }
-
-        if (Input.anyKeyDown && isReadyToRestart && !gameIsActive) //To listen to player's input  after the game ends
+        // Input.anyKeyDown PC
+        if (Input.touchCount >= 1 && isReadyToRestart && !gameIsActive) //To listen to player's input  after the game ends
         {
             RestartGame();
         }
@@ -51,6 +53,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         ballisFalling = true;
+        AudioSource.PlayClipAtPoint(fallingSound, Camera.main.transform.position + new Vector3(0,0,1), 1f);
         Invoke("ShowRestartText", 1f); //small delay for sound?
     }
 

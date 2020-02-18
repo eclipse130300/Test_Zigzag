@@ -95,6 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09762b7c2e466004495eb2ca88c34ea6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gemPickUp: {fileID: 8300000, guid: 8166d4ff3cda424418d0ecf4966b104c, type: 3}
 --- !u!68 &289993212131429365
 EdgeCollider2D:
   m_ObjectHideFlags: 0

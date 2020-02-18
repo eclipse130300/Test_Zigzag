@@ -31,8 +31,8 @@ public class PlayerController : MonoBehaviour
         }
 
         if (gm.ballisFalling) Falling();
-
-        if (isGruonded && Input.GetMouseButtonDown(0))
+        // Input.GetMouseButtonDown(0) PC 
+        if (isGruonded && Input.touchCount >= 1)
         {
             if (goesStraight)
             {
@@ -50,7 +50,6 @@ public class PlayerController : MonoBehaviour
             colliders = Physics2D.OverlapCircleAll(transform.position, 0.0f);
             if (colliders.Length == 1) //always detects player - so 1;
             {
-                Debug.Log("I'm outside the weather zone");
                 isGruonded = false;
             }
     }
