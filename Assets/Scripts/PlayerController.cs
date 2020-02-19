@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
 
         if (gm.ballisFalling) Falling();
         // Input.GetMouseButtonDown(0) PC 
-        if (isGruonded && Input.touchCount >= 1)
+        if (isGruonded && Input.GetMouseButtonDown(0))// Input.touchCount >= 1)
         {
             if (goesStraight)
             {

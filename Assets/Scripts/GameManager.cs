@@ -32,13 +32,13 @@ public class GameManager : MonoBehaviour
     {
         if (SceneLoadCounter.SceneLoadCount == 0)
         { //Input.anyKeyDown PC
-            if (Input.touchCount >= 1 && !gameIsActive && !ballisFalling && !isReadyToRestart) //To listen to player's input for the very first secouns
+            if (Input.anyKeyDown && !gameIsActive && !ballisFalling && !isReadyToRestart) //To listen to player's input for the very first secouns
             {
                 StartGame();
             }
         }
-        // Input.anyKeyDown PC
-        if (Input.touchCount >= 1 && isReadyToRestart && !gameIsActive) //To listen to player's input  after the game ends
+        // Input.anyKeyDown PC Input.touchCount >= 1 andr?
+        if (Input.anyKeyDown && isReadyToRestart && !gameIsActive) //To listen to player's input  after the game ends
         {
             RestartGame();
         }
