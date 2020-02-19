@@ -22,27 +22,31 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Time.timeSinceLevelLoad >= 0.1f) // without it, calls right after restart??!!??..
+
+        if (Time.timeSinceLevelLoad >= 0.1f) // start handling GO, otherwise calls GO right after restart
         {
             if (collisionCounter == 0 && !gm.ballisFalling && gm.gameIsActive && !gm.isReadyToRestart) //calls GO only once
             {
                 gm.GameOver();
             }
         }
-
         if (gm.ballisFalling) Falling();
         // Input.GetMouseButtonDown(0) PC 
-        if (isGruonded && Input.GetMouseButtonDown(0))// Input.touchCount >= 1)
+        if (isGruonded && Input.touchCount > 0)
         {
-            if (goesStraight)
+            Touch touch = Input.GetTouch(0);
+            if (touch.phase == TouchPhase.Began)
             {
-                transform.Rotate(Vector3.forward, -rotationAngle);
-                goesStraight = false;
-            }
-            else
-            {
-                transform.Rotate(Vector3.forward, rotationAngle);
-                goesStraight = true;
+                if (goesStraight)
+                {
+                    transform.Rotate(Vector3.forward, -rotationAngle);
+                    goesStraight = false;
+                }
+                else
+                {
+                    transform.Rotate(Vector3.forward, rotationAngle);
+                    goesStraight = true;
+                }
             }
         }
         if (gm.gameIsActive) transform.Translate(Vector2.up * speed * Time.deltaTime);

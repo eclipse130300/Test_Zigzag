@@ -9,14 +9,14 @@ public class SpawnManager : MonoBehaviour
     public GameObject groundTile;
     public GameObject player;
     private const int startSpawnLimit = 30;
-    private float spawnDistance = 30f;
+    const float spawnDistance = 30f;
     Vector3 nextTilePos;
 
     void Start()
     {
         for (int i = 0; i < startSpawnLimit; i++)
         {
-                InstantiateTileAndGem();
+            InstantiateTileAndGem();
         }
     }
 
