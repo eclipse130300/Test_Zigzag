@@ -6,69 +6,71 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public bool gameIsActive;
-    public bool ballisFalling;
-    public bool isReadyToRestart;
-    public int score;
+    private int score;
 
     public Text startText;
     public Text restartText;
     public Text scoreText;
 
     public AudioClip fallingSound;
+
+    public enum State
+    {
+        STATE_STARTGAME,
+        STATE_ISPLAYING,
+        STATE_ISFALLING,
+        STATE_ENDGAME,
+    };
+    public State state;
+
     // Start is called before the first frame update
     void Start()
     {
-         startText.gameObject.SetActive(true);
-
+        startText.gameObject.SetActive(true);
+        state = State.STATE_STARTGAME;
         if (SceneLoadCounter.SceneLoadCount >= 1)
         {
-            StartGame();
+            StartGame();     
         }
-            
     }
     // Update is called once per frame
     void Update()
     {
         if (SceneLoadCounter.SceneLoadCount == 0) 
         { //Input.anyKeyDown PC
-            if ((Input.touchCount > 0  || Input.anyKeyDown) && !gameIsActive && !ballisFalling && !isReadyToRestart) //To listen to player's input for the very first secounds
+            if (Input.touchCount > 0 && state == State.STATE_STARTGAME) //To listen to player's input for the very first secounds
             {
                 StartGame();
             }
         }
         // Input.anyKeyDown PC
-        if ((Input.touchCount > 0  || Input.anyKeyDown ) && isReadyToRestart && !gameIsActive) //To listen to player's input  after the game ends
+        if (Input.touchCount > 0 && state == State.STATE_ENDGAME) //To listen to player's input  after the game ends
         {
             RestartGame();
         }
-
         scoreText.text = "Score: " + score;
     }
     void StartGame()
     {
+        state = State.STATE_ISPLAYING;
         startText.gameObject.SetActive(false);
-        gameIsActive = true;
     }
     public void GameOver()
     {
-        ballisFalling = true;
-        AudioSource.PlayClipAtPoint(fallingSound, Camera.main.transform.position + new Vector3(0,0,1), 1f);
+        state = State.STATE_ISFALLING;
+        AudioSource.PlayClipAtPoint(fallingSound, Camera.main.transform.position + new Vector3(0, 0, 1), 1f);
         Invoke("ShowRestartText", 1f); //small delay for sound?
     }
 
     public void RestartGame()
     {
-        isReadyToRestart = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name , LoadSceneMode.Single);
     }
 
     void ShowRestartText() //show restart text, and wait for player's input
     {
+        state = State.STATE_ENDGAME;
         restartText.gameObject.SetActive(true);
-        gameIsActive = false; //!!!
-        ballisFalling = false;
-        isReadyToRestart = true;
     }
     public void AddScore()
     {

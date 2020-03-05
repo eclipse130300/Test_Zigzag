@@ -10,7 +10,7 @@ public class CameraFollow : MonoBehaviour
     // Update is called once per frame
     private void Awake()
     {
-        offset.z = pivot.transform.position.z + 1f;
+        offset.z = pivot.transform.position.z + 1f; //orthographic cam, so 1 is enough
     }
 
     private void LateUpdate()
