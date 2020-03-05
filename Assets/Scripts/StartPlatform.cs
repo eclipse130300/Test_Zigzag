@@ -5,6 +5,12 @@ using UnityEngine.Tilemaps;
 
 public class StartPlatform : MonoBehaviour
 {
+    private Tilemap tilemap;
+
+    private void Awake()
+    {
+        tilemap = GetComponent<Tilemap>();
+    }
     private void OnTriggerExit2D(Collider2D collision)
     {
         StartCoroutine(Fading());
@@ -14,9 +20,9 @@ public class StartPlatform : MonoBehaviour
     {
         for (float ft = 1f; ft >= 0; ft -= 0.01f)
         {
-            Color c = GetComponent<Tilemap>().color;
+            Color c = tilemap.color;
             c.a = ft;
-            GetComponent<Tilemap>().color = c;
+            tilemap.color = c;
             yield return null;
         }
     }

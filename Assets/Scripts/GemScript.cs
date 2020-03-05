@@ -5,27 +5,28 @@ using UnityEngine;
 public class GemScript : MonoBehaviour
 {
     private GameObject player;
-    private GameManager gm;
+    private GameManager gmScript;
+    private SpriteRenderer spriteRenderer;
+
     public AudioClip gemPickUp;
+
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        gmScript = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
     private void Update()
     {
-        if (player != null)
+        if (player.transform.position.y > gameObject.transform.position.y)
         {
-            if (player.transform.position.y > gameObject.transform.position.y)
-            {
-                StartCoroutine(Fading());
-                Destroy(gameObject, 1f);
-            }
+            StartCoroutine(Fading());
+            Destroy(gameObject, 1f);
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        gm.AddScore();
+        gmScript.AddScore();
         AudioSource.PlayClipAtPoint(gemPickUp, Camera.main.transform.position + new Vector3(0, 0, 1) , 1f);
         Destroy(gameObject);
     }
@@ -34,9 +35,9 @@ public class GemScript : MonoBehaviour
     {
         for (float ft = 1f; ft >= 0; ft -= 0.01f)
         {
-            Color c = GetComponent<SpriteRenderer>().color;
+            Color c = spriteRenderer.color;
             c.a = ft;
-            GetComponent<SpriteRenderer>().color = c;
+            spriteRenderer.color = c;
             yield return null;
         }
     }

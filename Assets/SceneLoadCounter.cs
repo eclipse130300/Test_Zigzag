@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-// copyPaste
+//thnx unity forum
 public class SceneLoadCounter : MonoBehaviour
 {
     public static int SceneLoadCount { get; private set; }

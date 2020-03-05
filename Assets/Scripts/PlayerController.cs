@@ -4,26 +4,21 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private bool goesStraight;
+    private bool goesStraight = true;
     private float rotationAngle = 90f;
     private int collisionCounter = 0;
     private bool isGruonded;
-    public Collider2D[] colliders;
-    private GameManager gm;
-    [SerializeField] private float speed = 0;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-        goesStraight = true;
-    }
+    public Collider2D[] colliders;
+    public GameManager gm;
+
+    [SerializeField] private float speed = 0;
 
     // Update is called once per frame
     void Update()
     {
 
-        if (Time.timeSinceLevelLoad >= 0.1f) // start handling GO, otherwise calls GO right after restart
+        if (Time.timeSinceLevelLoad >= 0.1f) // calls GameOver 0.1 after reload, otherwise calls GO right after restart
         {
             if (collisionCounter == 0 && !gm.ballisFalling && gm.gameIsActive && !gm.isReadyToRestart) //calls GO only once
             {
@@ -59,15 +54,12 @@ public class PlayerController : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("GroundTile")
-        || collision.gameObject.CompareTag("StartPlatform")) collisionCounter--;
+        if (collision.gameObject.CompareTag("GroundTile")) collisionCounter--;
 
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("GroundTile") ||
-            collision.gameObject.CompareTag("StartPlatform")
-            )
+        if (collision.gameObject.CompareTag("GroundTile"))
         {
             collisionCounter++;
             isGruonded = true;

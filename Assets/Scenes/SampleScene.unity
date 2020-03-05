@@ -313,7 +313,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pivot: {fileID: 1219261275}
-  cameraOffset: -10
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -341,7 +340,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 7
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -365,7 +364,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -558,6 +557,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colliders: []
+  gm: {fileID: 151985438}
   speed: 5
 --- !u!212 &918155508
 SpriteRenderer:
@@ -637,9 +637,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.000009633565, y: 0.000009633564}
   serializedVersion: 2
-  m_Radius: 4.0000005
+  m_Radius: 3.668985
 --- !u!50 &918155511
 Rigidbody2D:
   serializedVersion: 4
@@ -953,6 +953,8 @@ MonoBehaviour:
   groundTile: {fileID: 1565468141783586931, guid: 47d1313d9a0fb47468362e18269996f9,
     type: 3}
   player: {fileID: 918155506}
+  startSpawnLimit: 20
+  spawnDistance: 20
 --- !u!4 &1596013374
 Transform:
   m_ObjectHideFlags: 0
@@ -983,7 +985,7 @@ GameObject:
   - component: {fileID: 1755607060}
   m_Layer: 0
   m_Name: StartPlatform
-  m_TagString: StartPlatform
+  m_TagString: GroundTile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

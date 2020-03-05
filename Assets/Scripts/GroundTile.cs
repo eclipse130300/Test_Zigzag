@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class GroundTile : MonoBehaviour
 {
+    SpriteRenderer spriteRenderer;
+
+    private void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
     private void OnTriggerExit2D(Collider2D collision)
     {
         StartCoroutine(Fading());
@@ -13,9 +19,9 @@ public class GroundTile : MonoBehaviour
     {
         for (float ft = 1f; ft >= 0; ft -= 0.01f)
         {
-            Color c = GetComponent<SpriteRenderer>().color;
+            Color c = spriteRenderer.color;
             c.a = ft;
-            GetComponent<SpriteRenderer>().color = c;
+            spriteRenderer.color = c;
             yield return null;
         }     
     }

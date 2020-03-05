@@ -8,9 +8,12 @@ public class SpawnManager : MonoBehaviour
     public GameObject gemPref;
     public GameObject groundTile;
     public GameObject player;
-    private const int startSpawnLimit = 30;
-    const float spawnDistance = 30f;
+
+    [SerializeField] int startSpawnLimit = 20;
+    [SerializeField] float spawnDistance = 20f;
+
     Vector3 nextTilePos;
+    GameObject newTile;
 
     void Start()
     {
@@ -30,15 +33,8 @@ public class SpawnManager : MonoBehaviour
     void InstantiateTileAndGem()
     {
         PickRandomDirection();
-        GameObject newTile = Instantiate(groundTile, nextTilePos, groundTile.transform.rotation);
-        lastTilePos = newTile.transform;
-        newTile.transform.SetParent(gameObject.transform);
-        int randomGemNumber = Random.Range(0, 6);
-        if (randomGemNumber == 0)
-        {
-            GameObject newGem = Instantiate(gemPref, newTile.transform.position, gemPref.transform.rotation);
-            newGem.transform.SetParent(gameObject.transform);
-        }
+        InstantiateTile();
+        InstantiateGem();
     }
     void PickRandomDirection()
     {
@@ -46,12 +42,27 @@ public class SpawnManager : MonoBehaviour
         {
             if (randomNum == 0)
             {
-                nextTilePos = lastTilePos.position + new Vector3(0.7071068f, 0.7071068f, 0f); //hardcode...found it out when I put empty GO instead of the last tile
+                nextTilePos = lastTilePos.position + new Vector3(0.7071068f, 0.7071068f, 0f); 
             }
             else
             {
                 nextTilePos = lastTilePos.position + new Vector3(-0.7071068f, 0.7071068f, 0f);
             }
+        }
+    }
+    void InstantiateTile()
+    {
+        newTile = Instantiate(groundTile, nextTilePos, groundTile.transform.rotation);
+        lastTilePos = newTile.transform;
+        newTile.transform.SetParent(gameObject.transform);
+    }
+    void InstantiateGem()
+    {
+        int randomGemNumber = Random.Range(0, 6);
+        if (randomGemNumber == 0)
+        {
+            GameObject newGem = Instantiate(gemPref, newTile.transform.position, gemPref.transform.rotation);
+            newGem.transform.SetParent(gameObject.transform);
         }
     }
 }
