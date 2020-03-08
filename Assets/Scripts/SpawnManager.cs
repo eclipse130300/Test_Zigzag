@@ -12,9 +12,15 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] int startSpawnLimit = 20;
     [SerializeField] float spawnDistance = 20f;
 
-    Vector3 nextTilePos;
     GameObject newTile;
-
+    Vector3 upRightDir;
+    Vector3 upLeftDir;
+    Vector3 nextTilePos;
+    private void Awake()
+    {
+        upRightDir = new Vector3(1, 1, 0f).normalized;
+        upLeftDir = new Vector3(-1, 1, 0f).normalized;
+    }
     void Start()
     {
         for (int i = 0; i < startSpawnLimit; i++)
@@ -41,12 +47,12 @@ public class SpawnManager : MonoBehaviour
         int randomNum = Random.Range(0, 2);
         {
             if (randomNum == 0)
-            {
-                nextTilePos = lastTilePos.position + new Vector3(0.7071068f, 0.7071068f, 0f); 
+            { //0.7071068f
+                nextTilePos = lastTilePos.position + upRightDir; //diagonally right
             }
             else
             {
-                nextTilePos = lastTilePos.position + new Vector3(-0.7071068f, 0.7071068f, 0f);
+                nextTilePos = lastTilePos.position + upLeftDir; //diagonally left
             }
         }
     }

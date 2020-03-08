@@ -27,7 +27,7 @@ public class GemScript : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         gmScript.AddScore();
-        AudioSource.PlayClipAtPoint(gemPickUp, Camera.main.transform.position + new Vector3(0, 0, 1) , 1f);
+        AudioSource.PlayClipAtPoint(gemPickUp, Camera.main.transform.position + Vector3.forward , 1f);
         Destroy(gameObject);
     }
 

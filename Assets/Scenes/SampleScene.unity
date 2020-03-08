@@ -251,14 +251,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66291462567c1444897a43290e6c424b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameIsActive: 0
-  ballisFalling: 0
-  isReadyToRestart: 0
-  score: 0
   startText: {fileID: 751546812}
   restartText: {fileID: 1267072888}
   scoreText: {fileID: 584692685}
   fallingSound: {fileID: 8300000, guid: 8b6de918fa2d2e54b94aa13eea7f3bcf, type: 3}
+  state: 0
 --- !u!4 &151985439
 Transform:
   m_ObjectHideFlags: 0
@@ -558,7 +555,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colliders: []
   gm: {fileID: 151985438}
-  speed: 5
+  speed: 4
 --- !u!212 &918155508
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -953,8 +950,8 @@ MonoBehaviour:
   groundTile: {fileID: 1565468141783586931, guid: 47d1313d9a0fb47468362e18269996f9,
     type: 3}
   player: {fileID: 918155506}
-  startSpawnLimit: 20
-  spawnDistance: 20
+  startSpawnLimit: 30
+  spawnDistance: 30
 --- !u!4 &1596013374
 Transform:
   m_ObjectHideFlags: 0

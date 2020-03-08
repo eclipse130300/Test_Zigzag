@@ -22,8 +22,8 @@ public class GameManager : MonoBehaviour
         STATE_ENDGAME,
     };
     public State state;
-
     // Start is called before the first frame update
+
     void Start()
     {
         startText.gameObject.SetActive(true);
@@ -38,13 +38,13 @@ public class GameManager : MonoBehaviour
     {
         if (SceneLoadCounter.SceneLoadCount == 0) 
         { //Input.anyKeyDown PC
-            if (Input.touchCount > 0 && state == State.STATE_STARTGAME) //To listen to player's input for the very first secounds
+            if (/*Input.touchCount > 0*/ Input.GetMouseButtonDown(0) && state == State.STATE_STARTGAME) //To listen to player's input for the very first secounds
             {
                 StartGame();
             }
         }
         // Input.anyKeyDown PC
-        if (Input.touchCount > 0 && state == State.STATE_ENDGAME) //To listen to player's input  after the game ends
+        if (/*Input.touchCount > 0*/Input.GetMouseButtonDown(0) && state == State.STATE_ENDGAME) //To listen to player's input  after the game ends
         {
             RestartGame();
         }
@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         state = State.STATE_ISFALLING;
-        AudioSource.PlayClipAtPoint(fallingSound, Camera.main.transform.position + new Vector3(0, 0, 1), 1f);
+        AudioSource.PlayClipAtPoint(fallingSound, Camera.main.transform.position + Vector3.forward, 1f);
         Invoke("ShowRestartText", 1f); //small delay for sound?
     }
 
