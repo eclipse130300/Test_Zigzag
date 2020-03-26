@@ -1,14 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class GroundTile : MonoBehaviour
 {
-    SpriteRenderer spriteRenderer;
+     SpriteRenderer _spriteRenderer;
 
     private void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -19,10 +20,14 @@ public class GroundTile : MonoBehaviour
     {
         for (float ft = 1f; ft >= 0; ft -= 0.01f)
         {
-            Color c = spriteRenderer.color;
+            Color c = _spriteRenderer.color;
             c.a = ft;
-            spriteRenderer.color = c;
+            _spriteRenderer.color = c;
             yield return null;
         }     
+    }
+    public class GroundTileFactory : PlaceholderFactory<GroundTile>
+    {
+
     }
 }

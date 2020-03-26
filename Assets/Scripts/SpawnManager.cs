@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -11,6 +12,11 @@ public class SpawnManager : MonoBehaviour
 
     [SerializeField] int startSpawnLimit = 20;
     [SerializeField] float spawnDistance = 20f;
+
+    [Inject]
+    GemScript.GemScriptFactory gemScriptFactory;
+    [Inject]
+    GroundTile.GroundTileFactory groundTileFactory;
 
     GameObject newTile;
     Vector3 upRightDir;
@@ -47,7 +53,7 @@ public class SpawnManager : MonoBehaviour
         int randomNum = Random.Range(0, 2);
         {
             if (randomNum == 0)
-            { //0.7071068f
+            {
                 nextTilePos = lastTilePos.position + upRightDir; //diagonally right
             }
             else
@@ -58,17 +64,17 @@ public class SpawnManager : MonoBehaviour
     }
     void InstantiateTile()
     {
-        newTile = Instantiate(groundTile, nextTilePos, groundTile.transform.rotation);
+        newTile = groundTileFactory.Create().gameObject;
+        newTile.transform.position = nextTilePos;
         lastTilePos = newTile.transform;
-        newTile.transform.SetParent(gameObject.transform);
     }
     void InstantiateGem()
     {
-        int randomGemNumber = Random.Range(0, 6);
+        int randomGemNumber = Random.Range(0, 6); //20 % chance
         if (randomGemNumber == 0)
         {
-            GameObject newGem = Instantiate(gemPref, newTile.transform.position, gemPref.transform.rotation);
-            newGem.transform.SetParent(gameObject.transform);
+            GameObject newGem = gemScriptFactory.Create().gameObject;
+            newGem.transform.position = newTile.transform.position;
         }
     }
 }

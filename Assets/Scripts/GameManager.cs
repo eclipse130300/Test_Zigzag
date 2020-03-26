@@ -28,23 +28,17 @@ public class GameManager : MonoBehaviour
     {
         startText.gameObject.SetActive(true);
         state = State.STATE_STARTGAME;
-        if (SceneLoadCounter.SceneLoadCount >= 1)
-        {
-            StartGame();     
-        }
     }
     // Update is called once per frame
     void Update()
     {
-        if (SceneLoadCounter.SceneLoadCount == 0) 
-        { //Input.anyKeyDown PC
-            if (/*Input.touchCount > 0*/ Input.GetMouseButtonDown(0) && state == State.STATE_STARTGAME) //To listen to player's input for the very first secounds
-            {
-                StartGame();
-            }
+
+        if (/*Input.touchCount > 0*/ Input.GetMouseButtonDown(0) && state == State.STATE_STARTGAME) //To listen to player's input for the very first secounds
+        {
+            StartGame();
         }
-        // Input.anyKeyDown PC
-        if (/*Input.touchCount > 0*/Input.GetMouseButtonDown(0) && state == State.STATE_ENDGAME) //To listen to player's input  after the game ends
+
+        else if (/*Input.touchCount > 0*/Input.GetMouseButtonDown(0) && state == State.STATE_ENDGAME) //To listen to player's input  after the game ends
         {
             RestartGame();
         }

@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class GemScript : MonoBehaviour
 {
     private GameObject player;
-    private GameManager gmScript;
+    private GameManager gm;
     private SpriteRenderer spriteRenderer;
 
     public AudioClip gemPickUp;
@@ -13,20 +14,20 @@ public class GemScript : MonoBehaviour
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        gmScript = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
     private void Update()
     {
-        if (player.transform.position.y > gameObject.transform.position.y)
+        if (player.transform.position.y > gameObject.transform.position.y) //checks distance
         {
-            StartCoroutine(Fading());
+            StartCoroutine(Fading()); //for fading
             Destroy(gameObject, 1f);
         }
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
+    }// collects item -- addsScore, plays sound, destroyGO
+    private void OnTriggerEnter2D(Collider2D collision) 
     {
-        gmScript.AddScore();
+        gm.AddScore();
         AudioSource.PlayClipAtPoint(gemPickUp, Camera.main.transform.position + Vector3.forward , 1f);
         Destroy(gameObject);
     }
@@ -40,5 +41,9 @@ public class GemScript : MonoBehaviour
             spriteRenderer.color = c;
             yield return null;
         }
+    }
+    public class GemScriptFactory : PlaceholderFactory<GemScript>
+    {
+
     }
 }

@@ -29,10 +29,10 @@ public class PlayerController : MonoBehaviour
 
         if (!isGrounded) Falling();
 
-        if (isGrounded && (Input.touchCount > 0 || Input.GetMouseButtonDown(0)))
+        if (isGrounded && Input.touchCount > 0)
         {
-            //Touch touch = Input.GetTouch(0);
-            //if (touch.phase == TouchPhase.Began)
+            Touch touch = Input.GetTouch(0);
+            if (touch.phase == TouchPhase.Began)
             {
                 if (goesStraight)
                 {
@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
         }
         if (gm.state == GameManager.State.STATE_ISPLAYING || gm.state == GameManager.State.STATE_ISFALLING)
         {
-            transform.Translate(Vector2.up * speed * Time.deltaTime); //push player forward
+            transform.Translate(Vector2.up * speed * Time.deltaTime); 
         }
         // check if the center of the player is inside of other collider
         colliders = Physics2D.OverlapCircleAll(transform.position, 0.0f);
