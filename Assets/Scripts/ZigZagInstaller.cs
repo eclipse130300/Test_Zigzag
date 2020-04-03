@@ -18,5 +18,6 @@ public class ZigZagInstaller : MonoInstaller
             FromComponentInNewPrefab(_tilePref).
             WithGameObjectName("GroundTile").
             UnderTransformGroup("Tiles");
+        
     }
 }

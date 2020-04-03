@@ -1,11 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
 public class GemScript : MonoBehaviour
 {
-    private GameObject player;
+    [Inject]
+    private Transform player;
+    [Inject]
     private GameManager gm;
     private SpriteRenderer spriteRenderer;
 
@@ -13,18 +16,17 @@ public class GemScript : MonoBehaviour
 
     private void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
     private void Update()
     {
-        if (player.transform.position.y > gameObject.transform.position.y) //checks distance
+        if (player.position.y > transform.position.y)
         {
-            StartCoroutine(Fading()); //for fading
-            Destroy(gameObject, 1f);
+            StartCoroutine(Fading());
+            Invoke(nameof(BackToPull), 2f);
         }
-    }// collects item -- addsScore, plays sound, destroyGO
+        
+    }
     private void OnTriggerEnter2D(Collider2D collision) 
     {
         gm.AddScore();
@@ -41,6 +43,18 @@ public class GemScript : MonoBehaviour
             spriteRenderer.color = c;
             yield return null;
         }
+    }
+
+    private void OnEnable()
+    {
+        Color spriteRendererColor = spriteRenderer.color;
+        spriteRendererColor.a = 1f;
+        spriteRenderer.color = spriteRendererColor;
+    }
+
+    void BackToPull()
+    {
+        GemPool.Instance.ReturnToPull(this);
     }
     public class GemScriptFactory : PlaceholderFactory<GemScript>
     {

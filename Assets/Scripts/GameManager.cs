@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        scoreText.text = "Score: " + score;
         startText.gameObject.SetActive(true);
         state = State.STATE_STARTGAME;
     }
@@ -33,16 +34,15 @@ public class GameManager : MonoBehaviour
     void Update()
     {
 
-        if (/*Input.touchCount > 0*/ Input.GetMouseButtonDown(0) && state == State.STATE_STARTGAME) //To listen to player's input for the very first secounds
+        if (Input.GetMouseButtonDown(0) && state == State.STATE_STARTGAME) //To listen to player's input for the very first secounds
         {
             StartGame();
         }
 
-        else if (/*Input.touchCount > 0*/Input.GetMouseButtonDown(0) && state == State.STATE_ENDGAME) //To listen to player's input  after the game ends
+        else if (Input.GetMouseButtonDown(0) && state == State.STATE_ENDGAME) //To listen to player's input  after the game ends
         {
             RestartGame();
         }
-        scoreText.text = "Score: " + score;
     }
     void StartGame()
     {
@@ -69,5 +69,6 @@ public class GameManager : MonoBehaviour
     public void AddScore()
     {
         score++;
+        scoreText.text = "Score: " + score;
     }
 }

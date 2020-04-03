@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class PlayerController : MonoBehaviour
 {
@@ -9,17 +11,18 @@ public class PlayerController : MonoBehaviour
     private float rotationAngle = 90f;
     private int collisionCounter = 0;
 
-    public Collider2D[] colliders;
-    public GameManager gm;
+    private Collider2D[] colliders;
+    [Inject]
+    private GameManager gm;
 
     [SerializeField] private float speed = 0;
-    private bool isFirstFrame;
-    float scaleDecrement = 0.001f;
+    private bool isFirstFrame = true;
+    private float scaleDecrement = 0.001f;
 
     // Update is called once per frame
     void Update()
     {
-        if (Time.timeSinceLevelLoad>= 0.01f) // calls GameOver 0.1 after reload, otherwise calls GO right after restart
+        if (!isFirstFrame)
         {
             if (collisionCounter == 0 && gm.state == GameManager.State.STATE_ISPLAYING) //calls GO only once
             {
@@ -48,15 +51,11 @@ public class PlayerController : MonoBehaviour
         }
         if (gm.state == GameManager.State.STATE_ISPLAYING || gm.state == GameManager.State.STATE_ISFALLING)
         {
-            transform.Translate(Vector2.up * speed * Time.deltaTime); 
+            transform.Translate(Vector2.up * (speed * Time.deltaTime)); 
         }
         // check if the center of the player is inside of other collider
         colliders = Physics2D.OverlapCircleAll(transform.position, 0.0f);
-        if (colliders.Length <= 1) isGrounded = false; //always detects player - so 1
-        else
-        {
-            isGrounded = true;
-        }
+        isGrounded = colliders.Length > 1;
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -72,10 +71,20 @@ public class PlayerController : MonoBehaviour
     }
     void Falling()
     {
-            if (gameObject.transform.localScale.x >= 0.001f) // gradually decrease the size of the ball, till miniscule amount
-            {
-            gameObject.transform.localScale -= new Vector3(scaleDecrement, scaleDecrement, 0);
-            }
+            if (gameObject.transform.localScale.x >= 0.001f)
+                gameObject.transform.localScale -= new Vector3(scaleDecrement, scaleDecrement, 0);
+ 
+    }
+
+    private void Start()
+    {
+        StartCoroutine(WaitForSecoundFrame());
+    }
+
+    IEnumerator WaitForSecoundFrame()
+    {
+        yield return null;
+        isFirstFrame = false;
     }
 }
 

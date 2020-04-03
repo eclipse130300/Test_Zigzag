@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
@@ -6,7 +7,7 @@ using Zenject;
 public class GroundTile : MonoBehaviour
 {
      SpriteRenderer _spriteRenderer;
-
+     public bool isActive;
     private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -14,7 +15,7 @@ public class GroundTile : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         StartCoroutine(Fading());
-            Destroy(gameObject, 1f);
+        Invoke(nameof(BackToPull), 2f);
     }
     IEnumerator Fading()
     {
@@ -26,6 +27,25 @@ public class GroundTile : MonoBehaviour
             yield return null;
         }     
     }
+
+    private void OnEnable()
+    {
+        isActive = true;
+        Color spriteRendererColor = _spriteRenderer.color;
+        spriteRendererColor.a = 1;
+        _spriteRenderer.color = spriteRendererColor;
+    }
+
+    private void OnDisable()
+    {
+        isActive = false;
+    }
+
+    void BackToPull()
+    {
+        TilePool.Instance.ReturnToPull(this);
+    }
+    
     public class GroundTileFactory : PlaceholderFactory<GroundTile>
     {
 

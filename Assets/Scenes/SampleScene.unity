@@ -232,6 +232,7 @@ GameObject:
   m_Component:
   - component: {fileID: 151985439}
   - component: {fileID: 151985438}
+  - component: {fileID: 151985440}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameManager
@@ -270,6 +271,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &151985440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 151985437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0166d8ff8d905b048b2448179e1f5d11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _components:
+  - {fileID: 151985438}
+  _identifier: 
+  _useSceneContext: 0
+  _context: {fileID: 0}
+  _bindType: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -534,6 +553,7 @@ GameObject:
   - component: {fileID: 918155507}
   - component: {fileID: 918155510}
   - component: {fileID: 918155511}
+  - component: {fileID: 918155512}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -553,8 +573,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d10817a09a4899648a1434f76a3e77c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colliders: []
-  gm: {fileID: 151985438}
   speed: 4
 --- !u!212 &918155508
 SpriteRenderer:
@@ -658,6 +676,24 @@ Rigidbody2D:
   m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &918155512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 918155506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0166d8ff8d905b048b2448179e1f5d11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _components:
+  - {fileID: 918155509}
+  _identifier: 
+  _useSceneContext: 0
+  _context: {fileID: 0}
+  _bindType: 0
 --- !u!1 &1195796231
 GameObject:
   m_ObjectHideFlags: 0
@@ -963,6 +999,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1596013374}
   - component: {fileID: 1596013373}
+  - component: {fileID: 1596013376}
+  - component: {fileID: 1596013375}
   m_Layer: 0
   m_Name: SpawnManager
   m_TagString: Untagged
@@ -983,10 +1021,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lastTilePos: {fileID: 1403295833}
-  gemPref: {fileID: 7964634328963786029, guid: c0e852fc975539645a126e828a94a62e, type: 3}
-  groundTile: {fileID: 1565468141783586931, guid: 47d1313d9a0fb47468362e18269996f9,
-    type: 3}
-  player: {fileID: 918155506}
+  "gemSpawn\u0421hance": 20
   startSpawnLimit: 30
   spawnDistance: 30
 --- !u!4 &1596013374
@@ -1003,6 +1038,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1596013375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1596013372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bc83a00b2fcc8041a007e5d6df1a368, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 5948592869997722354, guid: 47d1313d9a0fb47468362e18269996f9, type: 3}
+--- !u!114 &1596013376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1596013372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ef355d932a51e944a25b62326eaa895, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: -731125237994368842, guid: c0e852fc975539645a126e828a94a62e, type: 3}
 --- !u!1 &1755607054
 GameObject:
   m_ObjectHideFlags: 0

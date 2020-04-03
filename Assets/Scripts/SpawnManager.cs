@@ -6,29 +6,24 @@ using Zenject;
 public class SpawnManager : MonoBehaviour
 {
     public Transform lastTilePos;
-    public GameObject gemPref;
-    public GameObject groundTile;
-    public GameObject player;
+    [Inject]
+    private Transform player;
 
+    [SerializeField] int gemSpawnСhance = 20;
     [SerializeField] int startSpawnLimit = 20;
     [SerializeField] float spawnDistance = 20f;
-
-    [Inject]
-    GemScript.GemScriptFactory gemScriptFactory;
-    [Inject]
-    GroundTile.GroundTileFactory groundTileFactory;
-
-    GameObject newTile;
+    
     Vector3 upRightDir;
     Vector3 upLeftDir;
     Vector3 nextTilePos;
-    private void Awake()
+
+    private GroundTile lastSpawnedTile;
+    
+    void Start()
     {
         upRightDir = new Vector3(1, 1, 0f).normalized;
         upLeftDir = new Vector3(-1, 1, 0f).normalized;
-    }
-    void Start()
-    {
+        
         for (int i = 0; i < startSpawnLimit; i++)
         {
             InstantiateTileAndGem();
@@ -37,7 +32,7 @@ public class SpawnManager : MonoBehaviour
 
     void Update()
     {
-        if (Vector3.Distance(player.transform.position, lastTilePos.position) <= spawnDistance)
+        if (Vector3.Distance(player.position, lastTilePos.position) <= spawnDistance)
         {
             InstantiateTileAndGem();
         }
@@ -48,34 +43,29 @@ public class SpawnManager : MonoBehaviour
         InstantiateTile();
         InstantiateGem();
     }
-    void PickRandomDirection()
+
+    private void PickRandomDirection()
     {
-        int randomNum = Random.Range(0, 2);
-        {
-            if (randomNum == 0)
-            {
-                nextTilePos = lastTilePos.position + upRightDir; //diagonally right
-            }
-            else
-            {
-                nextTilePos = lastTilePos.position + upLeftDir; //diagonally left
-            }
-        }
+        var randomNum = Random.Range(0, 2);
+        nextTilePos = randomNum == 0
+            ? lastTilePos.position + upRightDir
+            : lastTilePos.position + upLeftDir;
     }
     void InstantiateTile()
     {
-        newTile = groundTileFactory.Create().gameObject;
-        newTile.transform.position = nextTilePos;
-        lastTilePos = newTile.transform;
+        lastSpawnedTile = TilePool.Instance.GetFromPull();
+        lastSpawnedTile.transform.position = nextTilePos;
+        
+        lastTilePos = lastSpawnedTile.transform;
     }
+
     void InstantiateGem()
     {
-        int randomGemNumber = Random.Range(0, 6); //20 % chance
-        if (randomGemNumber == 0)
-        {
-            GameObject newGem = gemScriptFactory.Create().gameObject;
-            newGem.transform.position = newTile.transform.position;
-        }
+        if (!lastSpawnedTile.isActive) return;
+        var randomGemNumber = Random.Range(0,  101); 
+        if (randomGemNumber >= gemSpawnСhance) return; //20 % chance
+        var newGem = GemPool.Instance.GetFromPull();
+        newGem.gameObject.transform.position = lastSpawnedTile.transform.position;
     }
 }
 
